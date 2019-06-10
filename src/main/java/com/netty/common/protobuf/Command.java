@@ -30,63 +30,67 @@ public final class Command {
      * 验证
      * </pre>
      *
-     * <code>AUTH = 1;</code>
+     * <code>AUTH = 0;</code>
      */
-    AUTH(1),
+    AUTH(0),
     /**
      * <pre>
      **
      * ping
      * </pre>
      *
-     * <code>PING = 2;</code>
+     * <code>PING = 1;</code>
      */
-    PING(2),
+    PING(1),
     /**
      * <pre>
      **
      * pong
      * </pre>
      *
-     * <code>PONG = 3;</code>
+     * <code>PONG = 2;</code>
      */
-    PONG(3),
+    PONG(2),
     /**
      * <pre>
      **
      * 上传数据
      * </pre>
      *
-     * <code>UPLOAD_DATA = 4;</code>
+     * <code>UPLOAD_DATA = 3;</code>
      */
-    UPLOAD_DATA(4),
+    UPLOAD_DATA(3),
     /**
      * <pre>
      **
      * 推送数据
      * </pre>
      *
-     * <code>PUSH_DATA = 5;</code>
+     * <code>PUSH_DATA = 4;</code>
      */
-    PUSH_DATA(5),
+    PUSH_DATA(4),
     /**
      * <pre>
      **
      * 验证返回
      * </pre>
      *
-     * <code>AUTH_BACK = 11;</code>
+     * <code>AUTH_BACK = 5;</code>
      */
-    AUTH_BACK(11),
+    AUTH_BACK(5),
     /**
-     * <code>UPLOAD_DATA_BACK = 14;</code>
+     * <code>UPLOAD_DATA_BACK = 6;</code>
      */
-    UPLOAD_DATA_BACK(14),
+    UPLOAD_DATA_BACK(6),
     /**
-     * <code>PUSH_DATA_BACK = 15;</code>
+     * <code>PUSH_DATA_BACK = 7;</code>
      */
-    PUSH_DATA_BACK(15),
-    CHAT(16)
+    PUSH_DATA_BACK(7),
+    /**
+     * <code>CHAT = 8;</code>
+     */
+    CHAT(8),
+    UNRECOGNIZED(-1),
     ;
 
     /**
@@ -95,65 +99,73 @@ public final class Command {
      * 验证
      * </pre>
      *
-     * <code>AUTH = 1;</code>
+     * <code>AUTH = 0;</code>
      */
-    public static final int AUTH_VALUE = 1;
+    public static final int AUTH_VALUE = 0;
     /**
      * <pre>
      **
      * ping
      * </pre>
      *
-     * <code>PING = 2;</code>
+     * <code>PING = 1;</code>
      */
-    public static final int PING_VALUE = 2;
+    public static final int PING_VALUE = 1;
     /**
      * <pre>
      **
      * pong
      * </pre>
      *
-     * <code>PONG = 3;</code>
+     * <code>PONG = 2;</code>
      */
-    public static final int PONG_VALUE = 3;
+    public static final int PONG_VALUE = 2;
     /**
      * <pre>
      **
      * 上传数据
      * </pre>
      *
-     * <code>UPLOAD_DATA = 4;</code>
+     * <code>UPLOAD_DATA = 3;</code>
      */
-    public static final int UPLOAD_DATA_VALUE = 4;
+    public static final int UPLOAD_DATA_VALUE = 3;
     /**
      * <pre>
      **
      * 推送数据
      * </pre>
      *
-     * <code>PUSH_DATA = 5;</code>
+     * <code>PUSH_DATA = 4;</code>
      */
-    public static final int PUSH_DATA_VALUE = 5;
+    public static final int PUSH_DATA_VALUE = 4;
     /**
      * <pre>
      **
      * 验证返回
      * </pre>
      *
-     * <code>AUTH_BACK = 11;</code>
+     * <code>AUTH_BACK = 5;</code>
      */
-    public static final int AUTH_BACK_VALUE = 11;
+    public static final int AUTH_BACK_VALUE = 5;
     /**
-     * <code>UPLOAD_DATA_BACK = 14;</code>
+     * <code>UPLOAD_DATA_BACK = 6;</code>
      */
-    public static final int UPLOAD_DATA_BACK_VALUE = 14;
+    public static final int UPLOAD_DATA_BACK_VALUE = 6;
     /**
-     * <code>PUSH_DATA_BACK = 15;</code>
+     * <code>PUSH_DATA_BACK = 7;</code>
      */
-    public static final int PUSH_DATA_BACK_VALUE = 15;
+    public static final int PUSH_DATA_BACK_VALUE = 7;
+    /**
+     * <code>CHAT = 8;</code>
+     */
+    public static final int CHAT_VALUE = 8;
 
 
     public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
       return value;
     }
 
@@ -167,14 +179,15 @@ public final class Command {
 
     public static CommandType forNumber(int value) {
       switch (value) {
-        case 1: return AUTH;
-        case 2: return PING;
-        case 3: return PONG;
-        case 4: return UPLOAD_DATA;
-        case 5: return PUSH_DATA;
-        case 11: return AUTH_BACK;
-        case 14: return UPLOAD_DATA_BACK;
-        case 15: return PUSH_DATA_BACK;
+        case 0: return AUTH;
+        case 1: return PING;
+        case 2: return PONG;
+        case 3: return UPLOAD_DATA;
+        case 4: return PUSH_DATA;
+        case 5: return AUTH_BACK;
+        case 6: return UPLOAD_DATA_BACK;
+        case 7: return PUSH_DATA_BACK;
+        case 8: return CHAT;
         default: return null;
       }
     }
@@ -212,6 +225,9 @@ public final class Command {
         throw new java.lang.IllegalArgumentException(
           "EnumValueDescriptor is not for this type.");
       }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
       return VALUES[desc.getIndex()];
     }
 
@@ -233,12 +249,12 @@ public final class Command {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rCommand.proto\032\rCommand.proto*\204\001\n\013Comma" +
-      "ndType\022\010\n\004AUTH\020\001\022\010\n\004PING\020\002\022\010\n\004PONG\020\003\022\017\n\013" +
-      "UPLOAD_DATA\020\004\022\r\n\tPUSH_DATA\020\005\022\r\n\tAUTH_BAC" +
-      "K\020\013\022\024\n\020UPLOAD_DATA_BACK\020\016\022\022\n\016PUSH_DATA_B" +
-      "ACK\020\017B$\n\031com.netty.common.protobufB\007Comm" +
-      "and"
+      "\n\rCommand.proto*\216\001\n\013CommandType\022\010\n\004AUTH\020" +
+      "\000\022\010\n\004PING\020\001\022\010\n\004PONG\020\002\022\017\n\013UPLOAD_DATA\020\003\022\r" +
+      "\n\tPUSH_DATA\020\004\022\r\n\tAUTH_BACK\020\005\022\024\n\020UPLOAD_D" +
+      "ATA_BACK\020\006\022\022\n\016PUSH_DATA_BACK\020\007\022\010\n\004CHAT\020\010" +
+      "B$\n\031com.netty.common.protobufB\007Commandb\006" +
+      "proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -251,9 +267,7 @@ public final class Command {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.netty.common.protobuf.Command.getDescriptor(),
         }, assigner);
-    com.netty.common.protobuf.Command.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
