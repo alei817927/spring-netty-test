@@ -40,7 +40,7 @@ public class LogicServerHandler extends ChannelInboundHandlerAdapter {
         MessageBase.newBuilder()
             .setClientId(msgBase.getClientId())
             .setCmd(CommandType.CHAT)
-            .setData(System.currentTimeMillis() + "哈哈哈")
+            .setData(System.currentTimeMillis() + ((MessageBase) msg).getData())
             .build()
     );
     /*
