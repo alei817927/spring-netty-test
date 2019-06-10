@@ -35,12 +35,15 @@ public class LogicServerHandler extends ChannelInboundHandlerAdapter {
   public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
     Message.MessageBase msgBase = (Message.MessageBase) msg;
 
-    log.info("客户端：" + msgBase.getData());
+    String value = msgBase.getData();
+    String reverseValue = new StringBuilder(value).reverse().toString();
+    System.out.println("客户端说：" + value);
+    System.out.println("服务器说：" + reverseValue);
     ctx.writeAndFlush(
         MessageBase.newBuilder()
             .setClientId(msgBase.getClientId())
             .setCmd(CommandType.CHAT)
-            .setData(System.currentTimeMillis() + ((MessageBase) msg).getData())
+            .setData(reverseValue)
             .build()
     );
     /*

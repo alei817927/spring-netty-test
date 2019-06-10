@@ -57,7 +57,8 @@ public class LogicClientHandler extends SimpleChannelInboundHandler<MessageBase>
       log.info(msg.getData());
 
     } else {
-      log.info("服务器：" + msg.getData());
+//      log.info();
+      System.out.println("服务器说：" + msg.getData());
     }
   }
 }

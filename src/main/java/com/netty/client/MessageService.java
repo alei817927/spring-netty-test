@@ -25,7 +25,7 @@ public class MessageService {
             System.out.println("不能发送消息");
             continue;
           }
-          System.out.println("我说：" + str);
+          System.out.println("客户端说：" + str);
           Message.MessageBase.Builder authMsg = Message.MessageBase.newBuilder();
           authMsg.setClientId("");
           authMsg.setCmd(Command.CommandType.CHAT);

@@ -55,7 +55,7 @@ public class AuthServerHandler extends ChannelInboundHandlerAdapter {
 			attr.set(clientId);
 			channelRepository.put(clientId, ctx.channel());
 			
-			ctx.writeAndFlush(createData(clientId, CommandType.AUTH_BACK, "This is response data").build());
+//			ctx.writeAndFlush(createData(clientId, CommandType.AUTH_BACK, "This is response data").build());
 		
 		}else if(msgBase.getCmd().equals(CommandType.PING)){
 			//处理ping消息
