@@ -65,7 +65,7 @@ public class AuthServerHandler extends ChannelInboundHandlerAdapter {
 			if(ch.isOpen()){
 				//触发下一个handler
 				ctx.fireChannelRead(msg);
-				log.info("我进业务入处理逻辑");
+//				log.info("我进业务入处理逻辑");
 			}
 		}
 		ReferenceCountUtil.release(msg);
