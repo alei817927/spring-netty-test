@@ -86,6 +86,7 @@ public final class Command {
      * <code>PUSH_DATA_BACK = 15;</code>
      */
     PUSH_DATA_BACK(15),
+    CHAT(16)
     ;
 
     /**

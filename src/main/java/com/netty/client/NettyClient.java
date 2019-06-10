@@ -34,24 +34,12 @@ public class NettyClient {
 
   private EventLoopGroup loop = new NioEventLoopGroup();
 
+  private static MessageService messageService;
   public static void main(String[] args) throws Exception {
+    messageService = new MessageService();
+    messageService.init();
     NettyClient client = new NettyClient();
-    runScanner("1");
     client.run();
-  }
-
-  private static void runScanner(String p) {
-    new Thread() {
-      @Override
-      public void run() {
-        Scanner sc = new Scanner(System.in);
-        while (sc.hasNext()) {
-          //利用nextXXX()方法输出内容
-          String str = sc.next();
-          System.out.println(str);
-        }
-      }
-    }.start();
   }
 
   public void run() throws Exception {
@@ -95,7 +83,9 @@ public class NettyClient {
           if (!futureListener.isSuccess()) {
             log.warn("Failed to connect to server, try connect after 10s");
             futureListener.channel().eventLoop().schedule(() -> doConnect(new Bootstrap(), eventLoop), 10, TimeUnit.SECONDS);
+            return;
           }
+          messageService.setChannel(futureListener.channel());
         });
         f.channel().closeFuture().sync();
         eventLoopGroup.shutdownGracefully();
